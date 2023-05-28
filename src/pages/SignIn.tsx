@@ -143,7 +143,7 @@ export default function SingIn() {
 
           <Stack direction="row" spacing={0.5}>
             <Typography variant="body2">É uma empresa parceira?</Typography>
-            <Link href="/signup-enterprise" variant="body2">
+            <Link href="/signin-enterprise" variant="body2">
               {'Faça seu login aqui'}
             </Link>
           </Stack>
