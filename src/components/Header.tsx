@@ -17,7 +17,7 @@ export function Header() {
 
   return (
     <AppBar position="static" color='inherit' sx={{ boxShadow: 0, borderBottom: 1, borderBottomColor: theme.palette.divider }}>
-      <Container maxWidth="xl" >
+      <Container maxWidth={false} >
         <Toolbar disableGutters>
           <IconButton
             size="large"
@@ -37,6 +37,8 @@ export function Header() {
           <Typography
             variant="h5"
             noWrap
+            component="a"
+            href="/home"
             sx={{
               ml: 2,
               display: { xs: 'none', md: 'flex' },
@@ -52,7 +54,7 @@ export function Header() {
             variant="h6"
             noWrap
             component="a"
-            href=""
+            href="/home"
             sx={{
               ml: 2,
               display: { xs: 'flex', md: 'none' },
