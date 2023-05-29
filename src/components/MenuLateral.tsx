@@ -1,5 +1,3 @@
-
-import { Home } from '@mui/icons-material';
 import {
   Avatar,
   Box,
@@ -14,7 +12,13 @@ import {
   Stack,
   useMediaQuery
 } from '@mui/material';
-import React from 'react';
+import {
+  Home,
+  School,
+  Work,
+  LocalOffer,
+  Assessment
+} from '@mui/icons-material';
 import { useDrawerContext } from '../contexts';
 
 function stringAvatar(name: string) {
@@ -64,11 +68,39 @@ export function MenuLateral({ children }: MenuLateralProps) {
 
           <Box flex={1}>
             <List component='nav'>
-              <ListItemButton>
+              <ListItemButton component="a" href="/home">
                 <ListItemIcon>
                   <Home />
                 </ListItemIcon>
                 <ListItemText primary="Página Inicial" />
+              </ListItemButton>
+
+              <ListItemButton component="a" href="/treinamentos">
+                <ListItemIcon>
+                  <School />
+                </ListItemIcon>
+                <ListItemText primary="Treinamentos" />
+              </ListItemButton>
+
+              <ListItemButton component="a" href="/cursos">
+                <ListItemIcon>
+                  <Work />
+                </ListItemIcon>
+                <ListItemText primary="Cursos" />
+              </ListItemButton>
+
+              <ListItemButton component="a" href="/vagas">
+                <ListItemIcon>
+                  <LocalOffer />
+                </ListItemIcon>
+                <ListItemText primary="Vagas" />
+              </ListItemButton>
+
+              <ListItemButton component="a" href="/testes">
+                <ListItemIcon>
+                  <Assessment />
+                </ListItemIcon>
+                <ListItemText primary="Meus Testes" />
               </ListItemButton>
             </List>
           </Box>

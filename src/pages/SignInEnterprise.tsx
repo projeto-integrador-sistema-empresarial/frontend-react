@@ -98,11 +98,12 @@ export default function SignInEnterprise() {
         }}
       >
         <img src={LogoIntegrador} width={100} alt="" />
-        <Box my={2}>
-          <Typography component="h1" variant="h5">
+
+        <Box my={2} textAlign={'center'}>
+          <Typography component="h1" variant="h5" >
             Projeto Integrador para empresas
           </Typography>
-          <Typography component="h3" variant="h6" >
+          <Typography component="h5" variant="body1">
             Acesse sua conta
           </Typography>
         </Box>
@@ -146,7 +147,7 @@ export default function SignInEnterprise() {
           <Grid container>
             <Grid item>
               <Stack direction="row" spacing={0.5}>
-                <Typography variant="body2">Não possui uma conta?</Typography>
+                <Typography variant="body2">É estudante ou mentor?</Typography>
                 <Link href="/signup" variant="body2">
                   {'Faça seu cadastro'}
                 </Link>
@@ -155,9 +156,9 @@ export default function SignInEnterprise() {
 
             <Grid item>
               <Stack direction="row" spacing={0.5}>
-                <Typography variant="body2">É uma empresa parceira?</Typography>
+                <Typography variant="body2">Deseja ser uma empresa parceira?</Typography>
                 <Link href="/signup-enterprise" variant="body2">
-                  {'Faça seu login aqui'}
+                  {'Faça seu cadastro aqui'}
                 </Link>
               </Stack>
             </Grid>
