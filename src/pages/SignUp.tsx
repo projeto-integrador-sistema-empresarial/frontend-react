@@ -10,8 +10,9 @@ import {
   Typography,
   Container,
   Stack,
+  MenuItem
 } from '@mui/material';
-import { api } from '../lib/api';
+import { api, setAuthorizationToken } from '../lib/api';
 import LogoIntegrador from '/Logo.png';
 import { Copyright } from '../components/CopyRight';
 
@@ -31,9 +32,10 @@ export default function SignUp() {
 
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
-  const [formErrors, setFormErrors] = useState({ username: '', email: '', password: '', confirmPassword: '' });
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [role, setRole] = useState('');
+  const [formErrors, setFormErrors] = useState({ username: '', email: '', password: '', confirmPassword: '' });
 
   const setError = (fieldName: string, errorMessage: string) => {
     setFormErrors((prevErrors) => ({
@@ -49,6 +51,9 @@ export default function SignUp() {
     const username = data.get('username');
     const email = data.get('email');
     const password = data.get('password');
+    const role = data.get('role');
+    console.log('handleSubmit ~ role:', role);
+
     const confirmPassword = data.get('confirmPassword');
 
     try {
@@ -57,20 +62,26 @@ export default function SignUp() {
         email: email,
         password: password,
         confirmPassword: confirmPassword,
+        role: role,
       });
 
-      const role = 'student';
-
       try {
-        const response = await api.post('/home', { username: email, password, role });
-        console.log('handleSubmit ~ response:', response);
-
-        if (response.status === 200 || response.status === 201) {
-          return navigate('/home');
-        } else {
-          // Lidar com uma resposta de erro da API
-          console.log('Resposta de erro da API:', response);
-        }
+        await api.post('/signup', { username: email, name: username, password, role })
+          .then((response) => {
+            if (response.status === 200 || response.status === 201) {
+              const token = response.data.token;
+              localStorage.setItem('token', token);
+              setAuthorizationToken(token);
+              return navigate('/home');
+            }
+          }).catch(error => {
+            console.log('.then ~ error:', error);
+            if (error.response.status === 401) {
+              if (error.response.data.error == 'Account already exists.') {
+                setError('email', 'Já existe um usuário registrado com esse email.')
+              }
+            }
+          });
       } catch (error) {
         // Lidar com erros de solicitação ou rede
         console.log('Erro de solicitação ou rede:', error);
@@ -183,6 +194,20 @@ export default function SignUp() {
             error={!!formErrors.confirmPassword}
             helperText={formErrors.confirmPassword}
           />
+          <TextField
+            select
+            margin="normal"
+            required
+            fullWidth
+            name="role"
+            label="Tipo de conta"
+            id="role"
+            value={role}
+            onChange={(event) => setRole(event.target.value)}
+          >
+            <MenuItem value="mentor">Mentor</MenuItem>
+            <MenuItem value="student">Estudante</MenuItem>
+          </TextField>
           <Button
             type="submit"
             fullWidth

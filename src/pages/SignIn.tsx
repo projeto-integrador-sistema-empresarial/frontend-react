@@ -10,7 +10,7 @@ import {
   Stack,
   Container,
 } from '@mui/material';
-import { api } from '../lib/api';
+import { api, setAuthorizationToken } from '../lib/api';
 import LogoIntegrador from '/Logo.png';
 import { Copyright } from '../components/CopyRight';
 
@@ -48,12 +48,16 @@ export default function SingIn() {
 
       const role = 'student';
 
-      api.post('/home', { username: email, password, role })
+      api.post('/signin', { username: email, password, role })
         .then((response) => {
           if (response.status === 200 || response.status === 201) {
+            const token = response.data.token; // Assume que o token é retornado na resposta como "token"
+            localStorage.setItem('token', token); // Salva o token no armazenamento local
+            setAuthorizationToken(token);
             return navigate('/home');
           }
         }).catch(error => {
+          console.log('.then ~ error:', error);
           if (error.response.status === 401) {
             if (error.response.data.error == 'Invalid username or password.') {
               setError('email', 'Usuário ou senha incorretos.')

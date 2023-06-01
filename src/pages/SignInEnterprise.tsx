@@ -48,14 +48,17 @@ export default function SignInEnterprise() {
         password: password,
       });
 
-      const role = 'student';
+      const role = 'company';
 
-      api.post('/home', { username: email, password, role })
+      api.post('/signin', { username: email, password, role })
         .then((response) => {
           if (response.status === 200 || response.status === 201) {
+            const token = response.data.token;
+            localStorage.setItem('token', token);
             return navigate('/home');
           }
         }).catch(error => {
+          console.log('.then ~ error:', error);
           if (error.response.status === 401) {
             if (error.response.data.error == 'Invalid username or password.') {
               setError('email', 'Usuário ou senha incorretos.')
